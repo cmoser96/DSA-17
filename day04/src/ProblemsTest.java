@@ -49,21 +49,30 @@ public class ProblemsTest {
      */
     @Test
     public void testRemoveKDigits() {
-        int[] in = new int[]{1,4,3,2,2,1,9};
+        int[] in = new int[]{1, 4, 3, 2, 2, 1, 9};
         Object[] out = Problems.removeKDigits(in, 3).toArray();
-        assertThat(out, is(new Integer[] {1, 2, 1, 9}));
+        assertThat(out, is(new Integer[]{1, 2, 1, 9}));
 
         in = new int[]{1, 0, 2, 0, 0};
         out = Problems.removeKDigits(in, 1).toArray();
-        assertThat(out, is(new Integer[] {0, 2, 0, 0}));
+        assertThat(out, is(new Integer[]{0, 2, 0, 0}));
 
         in = new int[]{8, 5, 9, 3, 4, 3};
         out = Problems.removeKDigits(in, 2).toArray();
-        assertThat(out, is(new Integer[] {5, 3, 4, 3}));
+        assertThat(out, is(new Integer[]{5, 3, 4, 3}));
 
         in = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
         out = Problems.removeKDigits(in, 5).toArray();
-        assertThat(out, is(new Integer[] {1, 2, 3, 4}));
+        assertThat(out, is(new Integer[]{1, 2, 3, 4}));
+
+        in = new int[]{1, 2, 3, 1, 5, 6, 7, 2, 9};
+        out = Problems.removeKDigits(in, 4).toArray();
+        assertThat(out, is(new Integer[]{1, 1, 5, 2, 9}));
+
+        in = new int[]{4, 0, 9, 1, 0, 1, 9, 4, 5, 9, 9, 6, 8, 2, 7, 2, 0, 8, 7, 2, 6, 4, 5, 1, 6, 5, 4, 8, 5, 5, 4, 9,
+                8, 6, 2, 4, 4, 6, 4, 1, 3, 8, 1, 3, 1, 5, 4, 3, 4, 4};
+        out = Problems.removeKDigits(in, 25).toArray();
+        assertThat(out, is(new Integer[]{0, 0, 0, 1, 4, 4, 9, 8, 6, 2, 4, 4, 6, 4, 1, 3, 8, 1, 3, 1, 5, 4, 3, 4, 4}));
     }
 
     private Node<Integer> arrToNodes(int[] arr) {
@@ -110,7 +119,7 @@ public class ProblemsTest {
         Node<Integer> n6 = arrToNodes(a6);
         assertThat(Problems.sumLists(n5, n6), is(case3));
 
-        // Case 3: zeros
+        // Case 4: zeros
         int[] a7 = {0};
         int[] a8 = {0};
         int case4 = 0;
@@ -118,6 +127,15 @@ public class ProblemsTest {
         Node<Integer> n7 = arrToNodes(a7);
         Node<Integer> n8 = arrToNodes(a8);
         assertThat(Problems.sumLists(n7, n8), is(case4));
+
+        // Case 5: random numbers
+        int[] a9 = {7, 6, 6, 5, 1};
+        int[] a10 = {5, 0, 7, 2, 1, 0};
+        int case5 = 583861;
+
+        Node<Integer> n9 = arrToNodes(a9);
+        Node<Integer> n10 = arrToNodes(a10);
+        assertThat(Problems.sumLists(n9, n10), is(case5));
     }
 
 }
