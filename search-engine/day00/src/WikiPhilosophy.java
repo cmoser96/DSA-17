@@ -37,13 +37,20 @@ public class WikiPhilosophy {
 	 */
 	public static boolean testConjecture(String destination, String source, int limit) throws IOException {
 		// Right now, this method tries the first link on the page, and if it is the destination, it returns true
-		// TODO: fix this method.
 		// Loop until reach limit, get stuck in a loop, reach a page with no links, or reach the destination
 		Element elt = getFirstValidLink(source);
 		String url = elt.attr("abs:href");
-		if (url.equals(destination))
-			return true;
-		return false;
+		int count = 0;
+		while (!url.equals(destination)){
+			System.out.println(url);
+			if(count>limit||url==null) {
+				return false;
+			}
+			elt = getFirstValidLink(url);
+			url = elt.attr("abs:href");
+			count++;
+		}
+		return true;
 	}
 
 	/**
