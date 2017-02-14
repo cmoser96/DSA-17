@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +23,12 @@ public class TermCounter {
 	}
 
 	public int size() {
-		return map.size();
+		Collection<Integer> vals = map.values();
+		int size = 0;
+		for(Integer val:vals){
+			size+=val;
+		}
+		return size;
 	}
 
 	public void processElements(Elements paragraphs) {
@@ -51,7 +57,7 @@ public class TermCounter {
 	}
 
 	public void incrementTermCount(String term) {
-		put(term, get(term) +1);
+		put(term, get(term) + 1);
 	}
 
 	public void put(String term, int count) {

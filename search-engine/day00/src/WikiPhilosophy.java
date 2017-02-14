@@ -1,6 +1,5 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -8,6 +7,7 @@ import org.jsoup.select.Elements;
 public class WikiPhilosophy {
 
 	private final static WikiFetcher wf = new WikiFetcher();
+	private static Set<String> urls = new HashSet<String>();
 
 	/**
 	 * Tests a conjecture about Wikipedia and Philosophy.
@@ -38,14 +38,15 @@ public class WikiPhilosophy {
 	public static boolean testConjecture(String destination, String source, int limit) throws IOException {
 		// Right now, this method tries the first link on the page, and if it is the destination, it returns true
 		// Loop until reach limit, get stuck in a loop, reach a page with no links, or reach the destination
+		//ArrayList<String> urlss = new ArrayList<String>();
 		Element elt = getFirstValidLink(source);
 		String url = elt.attr("abs:href");
 		int count = 0;
 		while (!url.equals(destination)){
-			System.out.println(url);
-			if(count>limit||url==null) {
+			if(urls.contains(url)||count>limit||url==null) {
 				return false;
 			}
+			urls.add(url);
 			elt = getFirstValidLink(url);
 			url = elt.attr("abs:href");
 			count++;
