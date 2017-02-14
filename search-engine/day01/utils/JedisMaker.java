@@ -96,6 +96,12 @@ public class JedisMaker {
         t.exec();
     }
 
+    public String put(Jedis jedis, String key, String val){
+		Transaction t = jedis.multi();
+		return t.getSet(key, val).toString();
+	}
+
+	public Set
 	/**
 	 * @param args
 	 * @throws IOException
