@@ -80,10 +80,10 @@ public class Crawler {
 		// Here is some sample code that tests your index, which assumes
 		// you have written a getCounts() method in Index, which returns
 		// a map from {url: count} for a given keyword
-		// Map<String, Integer> map = index.getCounts("programming");
-		// for (Map.Entry<String, Integer> entry: map.entrySet()) {
-		// 	System.out.println(entry);
-		// }
+		 Map<String, Integer> map = index.getCounts("programming");
+		 for (Map.Entry<String, Integer> entry: map.entrySet()) {
+		 	System.out.println(entry);
+		 }
 
 	}
 }
