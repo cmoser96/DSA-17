@@ -151,7 +151,7 @@ public class JedisMaker {
 		jedis.hset("myhash","word1", Integer.toString(2));
 		jedis.hincrBy("myhash","word1", 1);
 		jedis.hincrBy("myhash","word2", 1);
-		System.out.
+		System.out.println(jedis.hget("myhash", "word1") + jedis.hget("myhash", "word2"));
 		/*
 		- Create a new hash named "myhash", mapping the key "word1" to
 		the value "2", but do not use the string literal
