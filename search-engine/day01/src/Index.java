@@ -1,3 +1,4 @@
+import javafx.scene.paint.Stop;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -12,12 +13,14 @@ public class Index {
 	private Map<String, Set<TermCounter>> index = new HashMap<String, Set<TermCounter>>();
 
 	public void add(String term, TermCounter tc) {
-		if(!index.containsKey(term)){
-			index.put(term, new HashSet<>());
-		}
-		// if we're seeing a term for the first time, make a new Set
-		// otherwise we can add the term to an existing Set
-		index.get(term).add(tc);
+		StopWords badWords = new StopWords();
+		if(!badWords.getStopWords().contains(term))
+			if(!index.containsKey(term)){
+				index.put(term, new HashSet<>());
+			}
+			// if we're seeing a term for the first time, make a new Set
+			// otherwise we can add the term to an existing Set
+			index.get(term).add(tc);
 	}
 
 	public Set<TermCounter> get(String term) {
