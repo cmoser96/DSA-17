@@ -34,7 +34,14 @@ public class Crawler {
 	 * @throws IOException
 	 */
 	public void crawl(int limit) throws IOException {
-		// TODO
+		int count = 0;
+		while (count < limit){
+			for (String link:queue) {
+				Elements paragraphs = wf.readWikipedia(link);
+				queueInternalLinks(paragraphs);
+				count++;
+			}
+		}
 	}
 
 	void queueInternalLinks(Elements paragraphs) {
