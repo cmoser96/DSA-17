@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.Set;
 
 import redis.clients.jedis.Jedis;
@@ -96,12 +97,6 @@ public class JedisMaker {
         t.exec();
     }
 
-    public String put(Jedis jedis, String key, String val){
-		Transaction t = jedis.multi();
-		return t.getSet(key, val).toString();
-	}
-
-	public Set
 	/**
 	 * @param args
 	 * @throws IOException
