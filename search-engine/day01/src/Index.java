@@ -14,13 +14,17 @@ public class Index {
 
 	public void add(String term, TermCounter tc) {
 		StopWords badWords = new StopWords();
-		if(!badWords.getStopWords().contains(term))
-			if(!index.containsKey(term)){
-				index.put(term, new HashSet<>());
-			}
+		try {
+			if (!badWords.getStopWords().contains(term))
+				if (!index.containsKey(term)) {
+					index.put(term, new HashSet<>());
+				}
 			// if we're seeing a term for the first time, make a new Set
 			// otherwise we can add the term to an existing Set
 			index.get(term).add(tc);
+		} catch (IOException e){
+			System.out.println(e.toString());
+		}
 	}
 
 	public Set<TermCounter> get(String term) {
