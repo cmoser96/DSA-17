@@ -35,12 +35,11 @@ public class Crawler {
 	 */
 	public void crawl(int limit) throws IOException {
 		int count = 0;
-		while (count < limit){
-			for (String link:queue) {
-				Elements paragraphs = wf.readWikipedia(link);
-				queueInternalLinks(paragraphs);
-				count++;
-			}
+		while (count < limit && queue.poll()!=null){
+            String link = queue.remove();
+            Elements paragraphs = wf.readWikipedia(link);
+            queueInternalLinks(paragraphs);
+            count++;
 		}
 	}
 
@@ -67,6 +66,7 @@ public class Crawler {
 		// make a WikiCrawler
 		Jedis jedis = JedisMaker.make();
 		Index index = new Index();
+        index.connect();
 		String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		Crawler wc = new Crawler(source, index);
 
@@ -74,9 +74,6 @@ public class Crawler {
 		Elements paragraphs = wf.fetchWikipedia(source);
 		wc.queueInternalLinks(paragraphs);
 
-        // TODO: Crawl outward starting at source
-
-		// TODO: Test that your index contains multiple pages.
 		// Here is some sample code that tests your index, which assumes
 		// you have written a getCounts() method in Index, which returns
 		// a map from {url: count} for a given keyword
