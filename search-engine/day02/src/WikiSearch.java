@@ -1,10 +1,14 @@
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import redis.clients.jedis.Jedis;
+
+public class CompareRelevance implements Comparator<Entry>{
+    public int compare(Integer entry1, Integer entry2){
+        return entry1.getRelevance().compareTo(entry2.getRelevance);
+    }
+}
 
 public class WikiSearch {
 
@@ -54,19 +58,20 @@ public class WikiSearch {
 
     // Sort the results by relevance.
     public List<Entry<String, Integer>> sort() {
-        // TODO
+        List<Entry> entries = new ArrayList<>();
+        for (String key: map.keySet()){
+            getRelevance(key);
+        }
         return null;
     }
 
 
-    // Performs a search and makes a WikiSearch object.
+    // Performs a search and make a WikiSearch object.
     public static WikiSearch search(String term, Index index) {
         // TODO: Use the index to get a map from URL to count
 
         // Fix this
-        WikiFetcher wf = new WikiFetcher();
-        index.connect();
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = index.getCounts(term);
 
         // Store the map locally in the WikiSearch
         return new WikiSearch(map);
@@ -77,8 +82,8 @@ public class WikiSearch {
     public static void main(String[] args) throws IOException {
 
         // make a Index
-        Jedis jedis = JedisMaker.make();
-        Index index = new Index(); // You might need to change this, depending on how your constructor works.
+        Index index = new Index();
+        index.connect();
 
         // search for the first term
         String term1 = "java";

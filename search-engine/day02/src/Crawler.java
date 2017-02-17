@@ -64,7 +64,6 @@ public class Crawler {
 
     public static void main(String[] args) throws IOException {
         // make a WikiCrawler
-        Jedis jedis = JedisMaker.make();
         Index index = new Index();
         index.connect();
         String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
