@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,8 +16,8 @@ public class WikiSearch {
     }
 
     public Integer getRelevance(String url) {
-        // TODO
-        return null;
+        Integer relevance = map.get(url);
+        return relevance==null ? 0: relevance;
     }
 
     // Prints the contents in order of term frequency.
@@ -63,7 +64,9 @@ public class WikiSearch {
         // TODO: Use the index to get a map from URL to count
 
         // Fix this
-        Map<String, Integer> map = null;
+        WikiFetcher wf = new WikiFetcher();
+        index.connect();
+        Map<String, Integer> map = new HashMap<>();
 
         // Store the map locally in the WikiSearch
         return new WikiSearch(map);
@@ -75,7 +78,7 @@ public class WikiSearch {
 
         // make a Index
         Jedis jedis = JedisMaker.make();
-        Index index = new Index(jedis); // You might need to change this, depending on how your constructor works.
+        Index index = new Index(); // You might need to change this, depending on how your constructor works.
 
         // search for the first term
         String term1 = "java";
