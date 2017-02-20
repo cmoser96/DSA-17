@@ -51,8 +51,7 @@ public class WikiSearch {
 
     // Computes the relevance of a search with multiple terms.
     protected int totalRelevance(Integer rel1, Integer rel2) {
-        // TODO
-        return 0;
+        return rel1>rel2 ? rel1: rel2;
     }
 
     // Sort the results by relevance.
@@ -67,9 +66,6 @@ public class WikiSearch {
 
     // Performs a search and make a WikiSearch object.
     public static WikiSearch search(String term, Index index) {
-        // TODO: Use the index to get a map from URL to count
-
-        // Fix this
         Map<String, Integer> map = index.getCounts(term);
 
         // Store the map locally in the WikiSearch
