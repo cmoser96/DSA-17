@@ -4,12 +4,6 @@ import java.util.Map.Entry;
 
 import redis.clients.jedis.Jedis;
 
-public class CompareRelevance implements Comparator<Entry>{
-    public int compare(Integer entry1, Integer entry2){
-        return entry1.getRelevance().compareTo(entry2.getRelevance);
-    }
-}
-
 public class WikiSearch {
 
     // map from URLs that contain the term(s) to relevance score
