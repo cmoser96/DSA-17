@@ -28,18 +28,23 @@ public class WikiSearch {
 
     // Computes the union of two search results.
     public WikiSearch or(WikiSearch that) {
-        // TODO
+        Set<String> keys = map.keySet();
+        keys.addAll(that.map.keySet());
         return null;
     }
 
     // Computes the intersection of two search results.
     public WikiSearch and(WikiSearch that) {
+        Set<String> keys = map.keySet();
+        keys.retainAll(that.map.keySet());
         // TODO
         return null;
     }
 
     // Computes the intersection of two search results.
     public WikiSearch minus(WikiSearch that) {
+        Set<String> keys = map.keySet();
+        keys.removeAll(that.map.keySet());
         // TODO
         return null;
     }
