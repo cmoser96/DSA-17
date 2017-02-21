@@ -45,6 +45,7 @@ public class WikiSearch {
         keys.retainAll(that.map.keySet());
         for (String key: keys){
             int value = totalRelevance(this.getRelevance(key),that.getRelevance(key));
+            System.out.println(value);
             andMap.put(key, value);
         }
         return new WikiSearch(andMap);
@@ -69,6 +70,7 @@ public class WikiSearch {
         else if (rel2 == null){
             return rel1;
         } else{
+            System.out.println("both");
             return rel1 + rel2;
         }
     }
@@ -77,10 +79,10 @@ public class WikiSearch {
         @Override
         public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
             if(o1.getValue() < o2.getValue()){
-                return -1;
+                return 1;
             }
             else if (o1.getValue() > o2.getValue()){
-                return 1;
+                return -1;
             }
             return 0;
         }

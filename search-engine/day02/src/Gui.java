@@ -44,6 +44,7 @@ public class Gui extends JPanel{
             // Declaring variables
             String [] terms;
             WikiSearch main;
+            WikiSearch result;
 
             //Reading from the textfield
             String input = query.getText();
@@ -53,23 +54,23 @@ public class Gui extends JPanel{
                 terms = input.split("&");
                 main = WikiSearch.search(terms[0], index);
                 WikiSearch secondary = WikiSearch.search(terms[1], index);
-                main.and(secondary);
+                result = main.and(secondary);
             } else if(input.contains("|")){
-                terms = input.split("|");
+                terms = input.split("\\|");
                 main = WikiSearch.search(terms[0], index);
                 WikiSearch secondary = WikiSearch.search(terms[1], index);
-                main.or(secondary);
+                result = main.or(secondary);
             } else if(input.contains("-")){
                 terms = input.split("-");
                 main = WikiSearch.search(terms[0], index);
                 WikiSearch secondary = WikiSearch.search(terms[1], index);
-                main.minus(secondary);
+                result = main.minus(secondary);
             } else{
-                main = WikiSearch.search(input, index);
+                result = WikiSearch.search(input, index);
             }
 
             // Putting the results in the textbox
-            List<Map.Entry<String, Integer>> entries = main.sort();
+            List<Map.Entry<String, Integer>> entries = result.sort();
             for (Map.Entry<String, Integer> entry: entries) {
                 results.append(entry.toString() + "\n");
             }
