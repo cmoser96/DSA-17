@@ -35,9 +35,10 @@ public class Crawler {
      */
     public void crawl(int limit) throws IOException {
         int count = 0;
-        while (count < limit && queue.poll()!=null){
-            String link = queue.remove();
-            Elements paragraphs = wf.readWikipedia(link);
+        String link;
+        while (count < limit && (link = queue.poll()) != null){
+            Elements paragraphs = wf.fetchWikipedia(link);
+            index.indexPage(link, paragraphs);
             queueInternalLinks(paragraphs);
             count++;
         }
@@ -68,6 +69,7 @@ public class Crawler {
         index.connect();
         String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
         Crawler wc = new Crawler(source, index);
+        wc.crawl(5);
 
         // for testing purposes, load up the queue
         Elements paragraphs = wf.fetchWikipedia(source);

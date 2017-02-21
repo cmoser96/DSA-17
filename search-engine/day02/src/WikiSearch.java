@@ -79,10 +79,10 @@ public class WikiSearch {
         @Override
         public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
             if(o1.getValue() < o2.getValue()){
-                return 1;
+                return -1;
             }
             else if (o1.getValue() > o2.getValue()){
-                return -1;
+                return 1;
             }
             return 0;
         }
@@ -112,7 +112,7 @@ public class WikiSearch {
         // make a Index
         Index index = new Index();
         index.connect();
-
+/*
         // search for the first term
         String term1 = "java";
         System.out.println("Query: " + term1);
@@ -129,5 +129,11 @@ public class WikiSearch {
         System.out.println("Query: " + term1 + " AND " + term2);
         WikiSearch intersection = search1.and(search2);
         intersection.print();
+        */
+        Jedis jedis = JedisMaker.make();
+        System.out.println(jedis.hgetAll("TermCounter: https://en.wikipedia.org/wiki/Java_(programming_language)"));
+        System.out.println(jedis.smembers("URLset: java"));
+        jedis.close();
+//        System.out.println(URLset);
     }
 }

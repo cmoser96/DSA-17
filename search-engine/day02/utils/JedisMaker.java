@@ -87,7 +87,7 @@ public class JedisMaker {
 		System.out.println("directory, and paste in the URL.");
 	}
 
-    public void clearAll(Jedis jedis) {
+    public static void clearAll(Jedis jedis) {
         Set<String> keys = jedis.keys("*");
         Transaction t = jedis.multi();
         for (String key: keys) {
@@ -105,7 +105,7 @@ public class JedisMaker {
 
 		Jedis jedis = make();
 
-        // clearAll(jedis);
+        clearAll(jedis);
 
 		// String
         /*

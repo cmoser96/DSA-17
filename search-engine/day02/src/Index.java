@@ -58,6 +58,7 @@ public class Index {
         for(String term:terms){
             System.out.println(term);
             t.hset(hashname, term, tc.get(term).toString());
+            t.sadd("URLset: " + term, url);
         }
         t.exec();
     }
@@ -75,7 +76,7 @@ public class Index {
     public void printIndex() {
         // loop through the search terms
         for (String term: keySet()) {
-            System.out.println(term);
+//            System.out.println(term);
 
             // for each term, print the pages where it appears
             Set<TermCounter> tcs = get(term);
