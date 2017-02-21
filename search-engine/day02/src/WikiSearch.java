@@ -28,39 +28,72 @@ public class WikiSearch {
 
     // Computes the union of two search results.
     public WikiSearch or(WikiSearch that) {
-        Set<String> keys = map.keySet();
+        Map<String, Integer> orMap = new HashMap();
+        Set<String> keys = new HashSet(this.map.keySet());
         keys.addAll(that.map.keySet());
-        return null;
+        for (String key: keys){
+            int value = totalRelevance(this.getRelevance(key), that.getRelevance(key));
+            orMap.put(key, value);
+        }
+        return new WikiSearch(orMap);
     }
 
     // Computes the intersection of two search results.
     public WikiSearch and(WikiSearch that) {
-        Set<String> keys = map.keySet();
+        Map<String, Integer> andMap = new HashMap();
+        Set<String> keys = this.map.keySet();
         keys.retainAll(that.map.keySet());
-        // TODO
-        return null;
+        for (String key: keys){
+            int value = totalRelevance(this.getRelevance(key),that.getRelevance(key));
+            andMap.put(key, value);
+        }
+        return new WikiSearch(andMap);
     }
 
     // Computes the intersection of two search results.
     public WikiSearch minus(WikiSearch that) {
-        Set<String> keys = map.keySet();
-        keys.removeAll(that.map.keySet());
-        // TODO
-        return null;
+        Set<String> keys = that.map.keySet();
+        for (String key: keys){
+            if (this.map.containsKey(key)){
+                this.map.remove(key);
+            }
+        }
+        return new WikiSearch(this.map);
     }
 
     // Computes the relevance of a search with multiple terms.
     protected int totalRelevance(Integer rel1, Integer rel2) {
-        return rel1>rel2 ? rel1: rel2;
+        if (rel1 == null){
+            return rel2;
+        }
+        else if (rel2 == null){
+            return rel1;
+        } else{
+            return rel1 + rel2;
+        }
     }
+
+    Comparator<Entry<String, Integer>> comparator = new Comparator<Entry<String, Integer>>() {
+        @Override
+        public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+            if(o1.getValue() < o2.getValue()){
+                return -1;
+            }
+            else if (o1.getValue() > o2.getValue()){
+                return 1;
+            }
+            return 0;
+        }
+    };
 
     // Sort the results by relevance.
     public List<Entry<String, Integer>> sort() {
-        List<Entry> entries = new ArrayList<>();
-        for (String key: map.keySet()){
-            getRelevance(key);
+        List<Entry<String, Integer>> entries = new ArrayList<Entry<String, Integer>>();
+        for(Entry<String, Integer> entry: this.map.entrySet()){
+            entries.add(entry);
         }
-        return null;
+        Collections.sort(entries, comparator);
+        return entries;
     }
 
 
@@ -71,8 +104,6 @@ public class WikiSearch {
         // Store the map locally in the WikiSearch
         return new WikiSearch(map);
     }
-
-    // TODO: Choose an extension and add your methods here
 
     public static void main(String[] args) throws IOException {
 
