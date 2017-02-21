@@ -7,14 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javafx.scene.paint.Stop;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
