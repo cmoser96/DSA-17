@@ -50,8 +50,30 @@ public class PeakFinding {
 
 
     public static int findOneDPeak(int[] nums){
-    	// TODO
-        return -1;
+        int div = 2;
+        int pos = nums.length/div;
+    	while(true){
+            if(pos>=nums.length){
+                return nums[nums.length-1];
+            }
+            if(pos<=0){
+                return nums[0];
+            }
+            else{
+                int comp = peak(pos,nums);
+                if(comp==0){
+                    return nums[comp];
+                }
+                else if(comp==-1){
+                    div*=2;
+                    pos -= nums.length/div;
+                }
+                else if(comp==1){
+                    div*=2;
+                    pos += nums.length/div;
+                }
+            }
+        }
     }
 
     public static int[] findTwoDPeak(int[][] nums){

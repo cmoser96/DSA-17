@@ -3,16 +3,19 @@ public class QuickSort extends SortAlgorithm {
     private static final int INSERTION_THRESHOLD = 10;
 
     /**
-     * Best-case runtime:
-     * Worst-case runtime:
-     * Average-case runtime:
+     * Best-case runtime: O(nlogn)
+     * Worst-case runtime: O(n^2)
+     * Average-case runtime: O(nlogn)
      *
      * Space-complexity:
      */
     @Override
     public int[] sort(int[] array) {
-        // TODO: Sort the array. Make sure you avoid the O(N^2) runtime worst-case
-        return new int[0];
+        if(array.length<=1){
+            return array;
+        }
+        quickSort(array, 0, array.length-1);
+        return array;
     }
 
     /**
@@ -24,7 +27,11 @@ public class QuickSort extends SortAlgorithm {
      * @param high The ending index of the subarray being considered (inclusive)
      */
     public void quickSort(int[] a, int low, int high) {
-        // TODO
+        if(low<high){
+            int p = partition(a, low, high);
+            quickSort(a, low, p-1);
+            quickSort(a, p+1, high);
+        }
     }
 
 
@@ -37,8 +44,16 @@ public class QuickSort extends SortAlgorithm {
      * @param high The ending index of the subarray being considered (inclusive)
      */
     public int partition(int[] array, int low, int high) {
-        // TODO
-        return 0;
+        int pivot = array[low];
+        int i = low+1;
+        for(int j=low+1; j<=high; j++){
+            if(array[j] < pivot){
+                swap(array, j, i);
+                i = i+1;
+            }
+        }
+        swap(array, low, i-1);
+        return i;
     }
 
 }
