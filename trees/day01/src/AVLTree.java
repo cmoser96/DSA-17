@@ -7,9 +7,10 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     TreeNode<T> delete(TreeNode<T> n, T key) {
         n = super.delete(n,key);
         if(n != null) {
-            // TODO: Update height and balance tree
+            n.height = height(n);
+            n = balance(n);
         }
-        return null;
+        return n;
     }
     /**
      * Insert a key into the tree rooted at the given node.
@@ -18,9 +19,10 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     TreeNode<T> insert(TreeNode<T>  n, T key) {
         n = super.insert(n,key);
         if(n != null) {
-            // TODO: update height and balance tree
+            n.height = height(n);
+            n = balance(n);
         }
-        return null;
+        return n;
     }
 
     /**
@@ -38,8 +40,10 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     // Return the height of the given node. Return -1 if null.
     private int height(TreeNode<T> n) {
-        // TODO
-        return 0;
+        if(n == null){
+            return -1;
+        }
+        return 1 + Math.max(height(n.leftChild), height(n.rightChild));
     }
 
     public int height() {
@@ -48,8 +52,19 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     // Restores the AVL tree property of the subtree.
     TreeNode<T> balance(TreeNode<T> n) {
-        // TODO
-        return null;
+        if(balanceFactor(n)>1){
+            if(balanceFactor(n.rightChild)==-1){
+                n.rightChild = rotateRight(n.rightChild);
+            }
+            n = rotateLeft(n);
+        }
+        if(balanceFactor(n)<-1){
+            if(balanceFactor(n.leftChild)==1){
+                n.leftChild = rotateLeft(n.leftChild);
+            }
+            n = rotateRight(n);
+        }
+        return n;
     }
 
     /**
@@ -60,23 +75,43 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
      * most one.
      */
     private int balanceFactor(TreeNode<T> n) {
-        // TODO
-        return 0;
+        int r = n.rightChild == null ? -1 : n.rightChild.height;
+        int l = n.leftChild == null ? -1 : n.leftChild.height;
+        return r - l;
     }
 
     /**
      * Perform a right rotation on node `n`. Return the head of the rotated tree.
      */
     private TreeNode<T> rotateRight(TreeNode<T> n) {
-        // TODO
-        return null;
+        TreeNode<T> x = n.leftChild;
+        TreeNode<T> b = x.rightChild;
+        x.rightChild = n;
+        n.leftChild = b;
+        n.height = height(n);
+        x.height = height(x);
+        return x;
     }
 
     /**
      * Perform a left rotation on node `n`. Return the head of the rotated tree.
      */
     private TreeNode<T> rotateLeft(TreeNode<T> n) {
-        // TODO
-        return null;
+        TreeNode<T> y = n.rightChild;
+        TreeNode<T> b = y.leftChild;
+        y.leftChild = n;
+        n.rightChild = b;
+        n.height = height(n);
+        y.height = height(y);
+        return y;
+    }
+
+    public static void main(String[] args) {
+        AVLTree<Integer> avl = new AVLTree<>();
+
+        avl.add(0);
+        avl.add(1);
+        avl.add(2);
+
     }
 }
