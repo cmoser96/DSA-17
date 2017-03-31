@@ -9,7 +9,6 @@ public class ShortestPath {
         q.add(v);
         while(!q.isEmpty()){
             int current = q.remove();
-            System.out.println(current);
             for(Integer i : g.getNeighbors(current)){
                 if(!map.containsKey(i)){
                     q.add(i);
@@ -20,7 +19,6 @@ public class ShortestPath {
                     while(path.peekFirst()!=v){
                         path.addFirst(map.get(path.peekFirst()));
                     }
-                    System.out.println(path);
                     return path;
                 }
             }
