@@ -11,9 +11,13 @@ public class FirstFailingVersion {
         else {
             diff = diff / 2;
         }
+
         if(isBadVersion.isFailingVersion(n)){
-            badVersion()
+            if(!isBadVersion.isFailingVersion(n-1)){
+                return n;
+            }
+            return badVersion(n-diff, diff, isBadVersion);
         }
-        return badVersion(n, diff, isBadVersion);
+        return badVersion(n+diff, diff, isBadVersion);
     }
 }
