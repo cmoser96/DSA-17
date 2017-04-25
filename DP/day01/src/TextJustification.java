@@ -1,19 +1,20 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
 public class TextJustification {
 
     public static List<Integer> justifyText(String[] w, int m) {
         int N = w.length;
-        int[] DP = new int[N+1];
+        double[] DP = new double[N+1];
         DP[N] = 0;
         int[] breaks = new int[N];
         breaks[N-1] = N;
 
-        for(int i=N-1; i>=0; i--){
+        for(int i=w.length-1; i>=0; i--){
             int end = i+1;
-            int lowest = Integer.MAX_VALUE;
-            for(int j=0; j<=N; j++){
-                int c = cost(w, i, j, m) + DP[j];
+            double lowest = Double.POSITIVE_INFINITY;
+            for(int j=i+1; j<=w.length; j++){
+                double c = cost(w, i, j, m) + DP[j];
                 if(c < lowest){
                     lowest = c;
                     end = j;
@@ -24,19 +25,22 @@ public class TextJustification {
         }
 
         int i = 0;
-        ArrayList<Integer> b = new ArrayList<>();
-        while (i < w.length) {
+        List<Integer> b = new LinkedList<>();
+        while (i < N) {
             b.add(i);
             i = breaks[i];
         }
         return b;
     }
 
-    private static int cost(String[] w, int low, int high, int m){
+    private static double cost(String[] w, int low, int high, int m){
         int length = high-low-1;
-        for(int i=0; i<high; i++){
+        for(int i=low; i<high; i++){
             length += w[i].length();
         }
-        return length>m ? Integer.MAX_VALUE : (int)Math.pow(m-length, 3);
+        if(length > m){
+            return Double.POSITIVE_INFINITY;
+        }
+        return Math.pow(m-length, 3);
     }
 }

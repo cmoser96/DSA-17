@@ -4,10 +4,10 @@ public class DungeonGame {
         int x = map.length;
         int y = map[0].length;
 
-        int[][] DP = new int[y+1][x+1];
-        for(int r=0; r<=x; r++){
-            for(int c=0; c<=y; c++){
-                DP[r][c] = 1;
+        int[][] DP = new int[y][x];
+        for(int r=0; r<x; r++){
+            for(int c=0; c<y; c++){
+                DP[r][c] = Integer.MAX_VALUE;
             }
         }
         int cost = -healthRecursive(map, map.length-1, map[0].length-1, DP)+1;
@@ -25,7 +25,7 @@ public class DungeonGame {
             return Math.min(map[x][y], -1);
         }
 
-        if(DP[x][y] != 1){
+        if(DP[x][y] != Integer.MAX_VALUE){
             return DP[x][y];
         }
 
@@ -42,6 +42,7 @@ public class DungeonGame {
                             healthRecursive(map, x, y-1, DP))
             , -1);
         }
+        System.out.println("x: " + x + " y: " + y + " cost: " + cost);
 
         DP[x][y] = cost;
         return cost;
